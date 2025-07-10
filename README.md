@@ -1,3 +1,15 @@
+---
+title: Entity Extraction
+emoji: 🐨
+colorFrom: blue
+colorTo: yellow
+sdk: streamlit
+sdk_version: "1.22.0"
+app_file: app.py
+pinned: false
+short_description: A professional tool for extracting named entities.
+---
+
 # Smart Entity Extraction and Document Clustering System
 
 ## Concept
@@ -35,22 +47,3 @@ A Python-based AI system for extracting named entities from PDFs or HTML, genera
 
 ## License
 MIT
-
----
-title: Entity Extraction
-emoji: 🐨
-colorFrom: blue
-colorTo: yellow
-sdk: streamlit
-sdk_version: "1.22.0"
-app_file: app.py
-pinned: false
-short_description: A professional tool for extracting named entities.
-full_description: >
-  This app extracts named entities from PDFs, clusters documents, and provides visualizations.
-license: mit
-tags:
-  - nlp
-  - entity-extraction
-  - clustering
----
