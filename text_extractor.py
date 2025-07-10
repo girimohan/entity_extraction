@@ -14,14 +14,13 @@ def load_spacy_model():
         nlp = spacy.load("en_core_web_trf")
         return nlp
     except OSError:
-        # If transformer model not found, try to download it
         try:
-            import subprocess
-            subprocess.run(["python", "-m", "spacy", "download", "en_core_web_trf"], check=True)
-            nlp = spacy.load("en_core_web_trf")
+            # Fallback to smaller model which should be available
+            nlp = spacy.load("en_core_web_sm")
+            st.warning("Using smaller spaCy model (en_core_web_sm) as the transformer model is not available.")
             return nlp
-        except Exception:
-            st.error("Could not load or download the spaCy transformer model. Please check the installation.")
+        except OSError:
+            st.error("No spaCy models found. Please check the installation.")
             return None
 
 def extract_text_from_pdf(pdf_path: str) -> str:
@@ -64,12 +63,3 @@ def extract_named_entities(text: str) -> List[Dict]:
         return entities
     except Exception as e:
         raise Exception(f"Error extracting entities: {str(e)}")
-        key = (ent.text.strip(), ent.label_)
-        if key not in seen:
-            seen.add(key)
-            entities.append(key)
-            label_counts[ent.label_] += 1
-    print("Entity counts by label:")
-    for label, count in label_counts.items():
-        print(f"  {label}: {count}")
-    return entities
