@@ -41,8 +41,8 @@ title: Entity Extraction
 emoji: 🐨
 colorFrom: blue
 colorTo: yellow
-sdk: gradio
-sdk_version: 5.35.0
+sdk: streamlit
+sdk_version: "1.22.0"
 app_file: app.py
 pinned: false
 short_description: A professional tool for extracting named entities.
