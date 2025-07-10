@@ -48,4 +48,9 @@ pinned: false
 short_description: A professional tool for extracting named entities.
 full_description: >
   This app extracts named entities from PDFs, clusters documents, and provides visualizations.
+license: mit
+tags:
+  - nlp
+  - entity-extraction
+  - clustering
 ---
