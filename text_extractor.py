@@ -3,31 +3,67 @@
 
 import fitz  # PyMuPDF
 import spacy
-from collections import defaultdict
-from typing import List, Tuple
+from typing import List, Dict
+import streamlit as st
+
+@st.cache_resource
+def load_spacy_model():
+    """Load spaCy model with caching for better performance"""
+    try:
+        # Try the transformer model first
+        nlp = spacy.load("en_core_web_trf")
+        return nlp
+    except OSError:
+        # If transformer model not found, try to download it
+        try:
+            import subprocess
+            subprocess.run(["python", "-m", "spacy", "download", "en_core_web_trf"], check=True)
+            nlp = spacy.load("en_core_web_trf")
+            return nlp
+        except Exception:
+            st.error("Could not load or download the spaCy transformer model. Please check the installation.")
+            return None
 
 def extract_text_from_pdf(pdf_path: str) -> str:
-    """
-    Extracts and returns the full text from a PDF file using PyMuPDF.
-    """
-    doc = fitz.open(pdf_path)
-    text = ""
-    for page in doc:
-        text += page.get_text()
-    return text.strip()
+    """Extract text from PDF file"""
+    try:
+        doc = fitz.open(pdf_path)
+        text = ""
+        for page in doc:
+            text += page.get_text()
+        doc.close()
+        return text
+    except Exception as e:
+        raise Exception(f"Error extracting text from PDF: {str(e)}")
 
-def extract_named_entities(text: str) -> List[Tuple[str, str]]:
-    """
-    Extracts named entities from text using SpaCy's en_core_web_trf model.
-    Returns a list of (entity_text, entity_label) tuples, filtered for duplicates/overlaps.
-    Also prints the number of entities per label type.
-    """
-    nlp = spacy.load("en_core_web_trf")
-    doc = nlp(text)
-    seen = set()
-    entities = []
-    label_counts = defaultdict(int)
-    for ent in doc.ents:
+def extract_named_entities(text: str) -> List[Dict]:
+    """Extract named entities from text using spaCy"""
+    if not text.strip():
+        return []
+    
+    nlp = load_spacy_model()
+    if nlp is None:
+        return []
+    
+    try:
+        # Process text in chunks if it's too long
+        max_length = 1000000  # 1MB limit for spaCy
+        if len(text) > max_length:
+            text = text[:max_length]
+        
+        doc = nlp(text)
+        entities = []
+        
+        for ent in doc.ents:
+            entities.append({
+                "text": ent.text.strip(),
+                "label": ent.label_,
+                "description": spacy.explain(ent.label_)
+            })
+        
+        return entities
+    except Exception as e:
+        raise Exception(f"Error extracting entities: {str(e)}")
         key = (ent.text.strip(), ent.label_)
         if key not in seen:
             seen.add(key)

@@ -1,13 +1,9 @@
 streamlit
-PyMuPDF
-pymupdf  # PyMuPDF for PDF text extraction
-spacy  # NLP library for NER
-# SpaCy transformer model (install via command below, not pip):
-# python -m spacy download en_core_web_trf
+pymupdf
+spacy
+https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.7.2/en_core_web_trf-3.7.2-py3-none-any.whl
 sentence-transformers
 scikit-learn
-hdbscan
-beautifulsoup4
-transformers
 matplotlib
 seaborn
+pandas
