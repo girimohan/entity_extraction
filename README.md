@@ -46,6 +46,5 @@ sdk_version: "1.22.0"
 app_file: app.py
 pinned: false
 short_description: A professional tool for extracting named entities.
+full_description: This app extracts named entities from PDFs, clusters documents, and provides visualizations.
 ---
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
