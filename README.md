@@ -1,5 +1,8 @@
 # Smart Entity Extraction and Document Clustering System
 
+## Concept
+A modern web app for extracting named entities from PDFs, generating embeddings, and clustering similar documents. Built for business, research, legal, and analytics use cases. Upload documents, extract insights, and visualize clusters—all in your browser.
+
 ## Overview
 A Python-based AI system for extracting named entities from PDFs or HTML, generating embeddings, and clustering similar documents. Features a Streamlit UI for easy interaction.
 
