@@ -10,18 +10,13 @@ import streamlit as st
 def load_spacy_model():
     """Load spaCy model with caching for better performance"""
     try:
-        # Try the transformer model first
+        # Load the transformer model for best results
         nlp = spacy.load("en_core_web_trf")
+        st.success("Using high-accuracy transformer model (en_core_web_trf)")
         return nlp
     except OSError:
-        try:
-            # Fallback to smaller model which should be available
-            nlp = spacy.load("en_core_web_sm")
-            st.warning("Using smaller spaCy model (en_core_web_sm) as the transformer model is not available.")
-            return nlp
-        except OSError:
-            st.error("No spaCy models found. Please check the installation.")
-            return None
+        st.error("Transformer model not found. Please check the installation.")
+        return None
 
 def extract_text_from_pdf(pdf_path: str) -> str:
     """Extract text from PDF file"""
