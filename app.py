@@ -6,6 +6,13 @@ import tempfile
 import spacy
 import subprocess
 
+# Configure Streamlit page
+st.set_page_config(
+    page_title="Entity Extraction Tool",
+    page_icon="🐨",
+    layout="centered"
+)
+
 # Ensure spaCy transformer model is installed
 try:
     spacy.load("en_core_web_trf")
@@ -26,13 +33,6 @@ def setup_spacy():
 setup_spacy()
 
 from text_extractor import extract_text_from_pdf, extract_named_entities
-
-# Configure Streamlit page
-st.set_page_config(
-    page_title="Entity Extraction Tool",
-    page_icon="🐨",
-    layout="centered"
-)
 
 # Main app
 st.title("🐨 Smart Entity Extraction and Document Clustering")
