@@ -3,6 +3,28 @@ import streamlit as st
 import pandas as pd
 import os
 import tempfile
+import spacy
+import subprocess
+
+# Ensure spaCy transformer model is installed
+try:
+    spacy.load("en_core_web_trf")
+except OSError:
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_trf"], check=True)
+
+# Setup spaCy model on first run
+@st.cache_resource
+def setup_spacy():
+    """Ensure spaCy model is installed"""
+    try:
+        from setup_model import setup_spacy_model
+        return setup_spacy_model()
+    except Exception:
+        return True  # Continue even if setup fails
+
+# Run setup
+setup_spacy()
+
 from text_extractor import extract_text_from_pdf, extract_named_entities
 
 # Configure Streamlit page
